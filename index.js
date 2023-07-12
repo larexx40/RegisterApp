@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const dbConnect = require('./dbconfig.js');
+const dbConnect = require('./db');
 const UserRoute = require('./routes/user.js')
 const jsonParser = express.json();
 

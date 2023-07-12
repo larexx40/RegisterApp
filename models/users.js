@@ -14,9 +14,19 @@ var schema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    password: {
+        type: String,
+        default: ''
+    },
     phone: String,
 });
 
-var user = new mongoose.model('User', schema);
+var User = new mongoose.model('User', schema);
 
-module.exports = user;
+
+// let create = new User({ email: 'test', firstName: 'test', lastName: 'test', phone: 'test' });
+//  create.save();
+
+
+module.exports = User;
+
