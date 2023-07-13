@@ -1,18 +1,25 @@
 const User = require("../models/users");
 const UserModel = require("../models/users")
+const {userType} = require("../util/enum");
 
 // Create and Save a new user
-exports.create = async (req, res) => {
+exports.registerMember = async (req, res) => {
     console.log("reach here");
-    if (!req.body.email && !req.body.firstName && !req.body.lastName && !req.body.phone) {
+    if (!req.body.email && !req.body.firstName && !req.body.lastName && !req.body.phone && !req.body.password) {
         res.status(400).send({ message: "Content can not be empty!" });
     }
+
+    const { department, email, firstName, lastName, address, occupation, phone } = req.body;
     
     const user = new UserModel({
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phone: req.body.phone
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        department: department,
+        address: address,
+        occupation: occupation,
+        userType: userType.MEMBER.value,
     });
 
     
@@ -89,6 +96,37 @@ exports.destroy = async (req, res) => {
     }).catch(err => {
         res.status(500).send({
           message: err.message
+        });
+    });
+};
+
+
+exports.changeUserType = async (req, res) => {
+    if(!req.body) {
+        res.status(400).send({
+            message: "Data to update can not be empty!"
+        });
+    }
+    
+    const id = req.params.id;
+    const {type} = req.body;
+    if(type < 0 || type > 2) {
+        res.status(404).send({
+            message: `Invalid user type passed.`
+        });
+    }
+    
+    await UserModel.findByIdAndUpdate(id, { userType: type}, { useFindAndModify: false }).then(data => {
+        if (!data) {
+            res.status(404).send({
+                message: `User not found.`
+            });
+        }else{
+            res.send({ message: "User updated successfully." })
+        }
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message
         });
     });
 };

@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dbConnect = require('./db');
 const UserRoute = require('./routes/user.js')
+const AuthRoute = require('./routes/auth.js')
 const jsonParser = express.json();
 
 const app = express();
@@ -14,6 +15,7 @@ const app = express();
 app.use(jsonParser);
 
 app.use('/user',UserRoute)
+app.use('/auth',AuthRoute)
 
 app.get('/', (req, res) => {
     res.json({"message": "Hello Crud Node Express"});

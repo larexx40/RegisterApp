@@ -18,14 +18,35 @@ var schema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    userType: {
+        type: Number,
+        default: 0
+    },
+    
+    addedBy: {
+        type: Number,
+        default: 0
+    },
+    department: {
+        type: String,
+        default: ''
+    },
     phone: String,
+    
+    address: {
+        type: String,
+        default: ''
+    },
+    
+    occupation: {
+        type: String,
+        default: ''
+    },
 });
 
 var User = new mongoose.model('User', schema);
 
 
-// let create = new User({ email: 'test', firstName: 'test', lastName: 'test', phone: 'test' });
-//  create.save();
 
 
 module.exports = User;
